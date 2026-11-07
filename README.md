@@ -8,13 +8,12 @@
 [![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5)
 [![CSS3](https://img.shields.io/badge/CSS3_Editorial_Craft-881337?style=for-the-badge&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
 [![Vanilla JS](https://img.shields.io/badge/Vanilla_JS-E5DDD0?style=for-the-badge&logo=javascript&logoColor=261C18)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![GitHub Pages](https://img.shields.io/badge/GitHub_Pages-Live-9F1239?style=for-the-badge&logo=github&logoColor=white)](https://4jeeh.github.io/sealed-letter/)
 
 <p align="center">
   <em>"Break the Royal Burgundy wax seal, watch the Muted Taupe envelope unfold, and read a timeless parchment letter personalized dynamically via URL query parameters."</em>
 </p>
 
-[🌐 **Live Demo (GitHub Pages)**](https://4jeeh.github.io/sealed-letter/) · [🔗 **URL Generator Guide**](#-url-generator-guide-github-pages) · [🚀 **Quick Start**](#-quick-start-local-development)
+[🔗 **URL Generator Guide**](#-url-generator-guide-github-pages) · [🚀 **Quick Start**](#-quick-start-local-development)
 
 </div>
 
@@ -46,7 +45,7 @@ Whether celebrating a birthday, marking a milestone, or sending a quiet note of 
 
 ---
 
-## 🔗 URL Generator Guide (GitHub Pages)
+## 🔗 Dynamic URL Customization Guide
 
 You can personalize **Sealed Letter** for any recipient and sender by appending query parameters to your GitHub Pages URL:
 
@@ -60,13 +59,13 @@ You can personalize **Sealed Letter** for any recipient and sender by appending 
 
 1. **Universal Default (No Parameters):**
    ```text
-   https://4jeeh.github.io/sealed-letter/
+   https://<your-username>.github.io/sealed-letter/
    ```
    *Renders the universal appreciation letter addressed to **"Someone Worth Celebrating"** and signed **"Someone Who Appreciates You"**.*
 
 2. **Personalized Recipient & Sender (`?to=Name&from=Sender`):**
    ```text
-   https://4jeeh.github.io/sealed-letter/?to=Eleanor&from=Julian
+   https://<your-username>.github.io/sealed-letter/?to=Eleanor&from=Julian
    ```
    *Addresses the sealed envelope to **"For Eleanor"**, opens with **"Dearest Eleanor,"**, and signs the parchment manuscript in handwritten ink from **"Julian"**.*
 
@@ -126,7 +125,7 @@ sealed-letter/
 3. Under **Build and deployment**, select **Deploy from a branch** (`main` / `/ (root)`).
 4. Your live site will be available at:
    ```text
-   https://4jeeh.github.io/sealed-letter/
+   https://<your-username>.github.io/sealed-letter/
    ```
 
 ---
