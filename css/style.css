@@ -1,0 +1,1301 @@
+/* ==========================================================================
+   SEALED LETTER — Warm Editorial & Vintage Wax Seal Design System
+   Palette:
+   - Warm Cream Parchment: #FAF7F2 -> #F3ECE2
+   - Muted Taupe Envelope: #E5DDD0
+   - Royal Burgundy Wax Seal: #881337 / #9F1239
+   Typography:
+   - Display: Playfair Display
+   - Letter Prose: Cormorant Garamond & Caveat
+   - UI Controls: Plus Jakarta Sans
+   ========================================================================== */
+
+:root {
+  /* Core Surfaces */
+  --parchment-light: #FAF7F2;
+  --parchment-warm: #F3ECE2;
+  --parchment-deep: #EAE0D1;
+  --parchment-card: #FCF9F5;
+
+  /* Muted Taupe Envelope Tones */
+  --envelope-base: #E5DDD0;
+  --envelope-flap-top: #EBE3D7;
+  --envelope-flap-side: #DCD2C2;
+  --envelope-flap-right: #D6CBB9;
+  --envelope-pocket: #E5DDD0;
+  --envelope-border: #C9BTA8;
+  --envelope-stroke: #C8BBA6;
+  --envelope-inner: #6D102C;
+
+  /* Royal Burgundy Wax Seal */
+  --wax-burgundy: #881337;
+  --wax-crimson: #9F1239;
+  --wax-deep: #5E0B24;
+  --wax-soft-tint: rgba(136, 19, 55, 0.08);
+
+  /* Warm Espresso & Sepia Inks (0% Cold Gray) */
+  --ink-primary: #261C18;
+  --ink-body: #332620;
+  --ink-secondary: #5A4940;
+  --ink-muted: #746055;
+  --ink-accent: #881337;
+
+  /* Typography */
+  --font-display: "Playfair Display", Georgia, serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Caveat", cursive;
+  --font-ui: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Motion Choreography */
+  --ease-glide: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-wax: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Shadows (Warm Espresso-tinted, offset + soft blur) */
+  --shadow-envelope: 0 22px 48px -12px rgba(44, 30, 22, 0.16),
+    0 6px 16px -4px rgba(44, 30, 22, 0.09);
+  --shadow-wax: 0 10px 22px -4px rgba(94, 11, 36, 0.42),
+    0 3px 6px rgba(38, 28, 24, 0.22);
+  --shadow-manuscript: 0 28px 64px -16px rgba(44, 30, 22, 0.14),
+    0 4px 14px -2px rgba(44, 30, 22, 0.07);
+}
+
+/* Browser Surface Theming */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+::selection {
+  background-color: rgba(136, 19, 55, 0.16);
+  color: var(--ink-primary);
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  background-color: var(--parchment-warm);
+  color: var(--ink-primary);
+  caret-color: var(--wax-burgundy);
+}
+
+/* Custom Warm Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--parchment-warm);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CFC2AE;
+  border: 2px solid var(--parchment-warm);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--wax-burgundy);
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-serif);
+  color: var(--ink-primary);
+  background: linear-gradient(
+    180deg,
+    var(--parchment-light) 0%,
+    var(--parchment-warm) 58%,
+    #EDE3D5 100%
+  );
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/*Focus states*/
+:focus-visible {
+  outline: 2px solid var(--wax-burgundy);
+  outline-offset: 3px;
+}
+
+/* Subtle Background Canvas for Warm Parchment Motes */
+#parchmentCanvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+/* ==========================================================================
+   Editorial Masthead Navigation
+   ========================================================================== */
+
+.masthead {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background-color: rgba(250, 247, 242, 0.92);
+  border-bottom: 1px solid rgba(200, 187, 166, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+.masthead__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0.95rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.masthead__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: var(--ink-primary);
+}
+
+.masthead__seal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--wax-burgundy);
+  border: 2px solid var(--wax-crimson);
+  box-shadow: 0 0 0 2px rgba(136, 19, 55, 0.18);
+  flex-shrink: 0;
+}
+
+.masthead__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink-primary);
+}
+
+.masthead__edition {
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  padding-left: 0.65rem;
+  border-left: 1px solid #D5C8B4;
+}
+
+.masthead__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+/* ==========================================================================
+   UI Buttons (Plus Jakarta Sans)
+   ========================================================================== */
+
+.ui-btn {
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1;
+  padding: 0.68rem 1.1rem;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.48rem;
+  cursor: pointer;
+  transition: transform 0.22s var(--ease-glide),
+    background-color 0.22s var(--ease-glide),
+    color 0.22s var(--ease-glide),
+    border-color 0.22s var(--ease-glide);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.ui-btn[hidden] {
+  display: none !important;
+}
+
+.ui-btn:active {
+  transform: scale(0.98);
+}
+
+.ui-btn--primary {
+  background-color: var(--wax-burgundy);
+  color: var(--parchment-light);
+  border: 1px solid var(--wax-deep);
+}
+
+.ui-btn--primary:hover {
+  background-color: var(--wax-crimson);
+  transform: translateY(-1px);
+}
+
+.ui-btn--outline {
+  background-color: var(--parchment-light);
+  color: var(--ink-primary);
+  border: 1px solid #C8BBA6;
+}
+
+.ui-btn--outline:hover {
+  background-color: var(--envelope-base);
+  border-color: var(--wax-burgundy);
+  color: var(--wax-burgundy);
+}
+
+.ui-btn--ghost {
+  background-color: transparent;
+  color: var(--ink-secondary);
+  border: 1px solid transparent;
+}
+
+.ui-btn--ghost:hover {
+  background-color: rgba(229, 221, 208, 0.6);
+  color: var(--ink-primary);
+}
+
+.ui-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Main Correspondence Stage & Intro Section
+   ========================================================================== */
+
+.correspondence-stage {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  width: 100%;
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 2.5rem 1.75rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stage-intro {
+  text-align: center;
+  max-width: 680px;
+  margin-bottom: 2.25rem;
+  transition: transform 0.7s var(--ease-glide), opacity 0.7s var(--ease-glide);
+}
+
+.stage-intro__headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 3.15rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--ink-primary);
+  margin-bottom: 0.85rem;
+  text-wrap: balance;
+}
+
+.stage-intro__headline span {
+  color: var(--wax-burgundy);
+}
+
+.stage-intro__subline {
+  font-family: var(--font-serif);
+  font-size: clamp(1.12rem, 1.8vw, 1.32rem);
+  line-height: 1.5;
+  color: var(--ink-secondary);
+  max-width: 58ch;
+  margin: 0 auto;
+}
+
+.stage-intro__subline strong {
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+/* ==========================================================================
+   The Muted Taupe Envelope & Royal Burgundy Wax Seal
+   ========================================================================== */
+
+.envelope-sanctuary {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  transition: margin 0.85s var(--ease-glide);
+}
+
+body[data-state="opening"] .envelope-sanctuary,
+body[data-state="unsealed"] .envelope-sanctuary {
+  margin-top: 13.25rem;
+  margin-bottom: 2.25rem;
+}
+
+.envelope-stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 580px;
+}
+
+.envelope {
+  position: relative;
+  width: min(100%, 540px);
+  height: 340px;
+  border-radius: 10px;
+  background-color: var(--envelope-base);
+  box-shadow: var(--shadow-envelope);
+  cursor: pointer;
+  user-select: none;
+  perspective: 1400px;
+  transition: transform 0.55s var(--ease-glide),
+    box-shadow 0.55s var(--ease-glide);
+}
+
+body[data-state="sealed"] .envelope:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 28px 56px -12px rgba(44, 30, 22, 0.2),
+    0 8px 20px -4px rgba(44, 30, 22, 0.12);
+}
+
+/* Envelope Back & Inner Burgundy Silk Lining */
+.envelope__back {
+  position: absolute;
+  inset: 0;
+  border-radius: 9px;
+  background-color: #D7CBB8;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.envelope__lining {
+  position: absolute;
+  top: 0;
+  left: 4%;
+  right: 4%;
+  height: 75%;
+  background-color: var(--wax-burgundy);
+  border: 1px solid rgba(250, 247, 242, 0.28);
+  border-radius: 6px;
+  opacity: 0.92;
+}
+
+/* ==========================================================================
+   Gliding Parchment Letter Sheet Inside the Envelope
+   (Slides smoothly upward on unsealing via cubic-bezier)
+   ========================================================================== */
+
+.envelope__gliding-sheet {
+  position: absolute;
+  left: 5.5%;
+  right: 5.5%;
+  top: 8%;
+  height: 84%;
+  background-color: var(--parchment-light);
+  border: 1px solid #DFD4C3;
+  border-radius: 6px;
+  box-shadow: 0 6px 20px rgba(38, 28, 24, 0.1);
+  z-index: 2;
+  padding: 1.35rem 1.65rem;
+  transform: translateY(0) scale(0.985);
+  transition: transform 0.95s var(--ease-glide);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Smooth Upward Glide when Seal Breaks */
+body[data-state="opening"] .envelope__gliding-sheet,
+body[data-state="unsealed"] .envelope__gliding-sheet {
+  transform: translateY(-96px) scale(1);
+  box-shadow: 0 16px 36px rgba(38, 28, 24, 0.16);
+}
+
+.gliding-sheet__inner {
+  padding: 0.5rem 0.65rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.gliding-sheet__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(200, 187, 166, 0.5);
+  padding-bottom: 0.45rem;
+}
+
+.gliding-sheet__folio {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--wax-burgundy);
+}
+
+.gliding-sheet__date {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.gliding-sheet__salutation {
+  font-family: var(--font-display);
+  font-size: 1.08rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink-primary);
+  margin-top: 0.35rem;
+}
+
+.gliding-sheet__excerpt {
+  font-family: var(--font-script);
+  font-size: 1.25rem;
+  line-height: 1.42;
+  color: var(--ink-body);
+  margin: 0.25rem 0;
+}
+
+.gliding-sheet__signature-row {
+  text-align: right;
+  font-family: var(--font-script);
+  font-size: 1.2rem;
+  line-height: 1.35;
+  color: var(--wax-burgundy);
+}
+
+/* ==========================================================================
+   Envelope Side Flaps & Front Muted Taupe Pocket (#E5DDD0)
+   ========================================================================== */
+
+.envelope__side-flaps {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.envelope__flap-left {
+  position: absolute;
+  inset: 0;
+  background-color: var(--envelope-flap-side);
+  clip-path: polygon(0 0, 52% 52%, 0 100%);
+  border-right: 1px solid var(--envelope-stroke);
+}
+
+.envelope__flap-right {
+  position: absolute;
+  inset: 0;
+  background-color: var(--envelope-flap-right);
+  clip-path: polygon(100% 0, 48% 52%, 100% 100%);
+}
+
+.envelope__pocket {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  background-color: var(--envelope-pocket);
+  clip-path: polygon(0 100%, 24% 42%, 76% 42%, 100% 100%);
+  border-bottom-left-radius: 9px;
+  border-bottom-right-radius: 9px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 1.25rem 1.5rem 1.35rem;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.45);
+}
+
+/* Addressee Stationary Plate on Front of Envelope */
+.envelope__address-plate {
+  background-color: var(--parchment-light);
+  border-radius: 6px;
+  padding: 0.75rem 1.4rem;
+  min-width: 260px;
+  max-width: 82%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  z-index: 5;
+}
+
+.address-plate__label {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+
+.address-plate__recipient {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  line-height: 1.32;
+}
+
+.address-plate__sender {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--wax-burgundy);
+}
+
+.envelope__postmark {
+  position: absolute;
+  bottom: 14px;
+  right: 18px;
+  width: 92px;
+  height: 44px;
+  pointer-events: none;
+}
+
+/* ==========================================================================
+   Top Hinged Triangular Flap (Opens in 3D when unsealed)
+   ========================================================================== */
+
+.envelope__top-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 58%;
+  z-index: 6;
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transform: rotateX(0deg);
+  transition: transform 0.8s var(--ease-glide), z-index 0s 0.25s;
+  pointer-events: none;
+}
+
+.envelope__top-flap-outer {
+  position: absolute;
+  inset: 0;
+  background-color: var(--envelope-flap-top);
+  clip-path: polygon(0 0, 100% 0, 50% 96%);
+  backface-visibility: hidden;
+  border-top-left-radius: 9px;
+  border-top-right-radius: 9px;
+  box-shadow: inset 0 -2px 4px rgba(38, 28, 24, 0.08);
+}
+
+.envelope__top-flap-inner {
+  position: absolute;
+  inset: 0;
+  background-color: var(--wax-burgundy);
+  clip-path: polygon(0 0, 100% 0, 50% 96%);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+}
+
+body[data-state="opening"] .envelope__top-flap,
+body[data-state="unsealed"] .envelope__top-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Royal Burgundy Wax Seal (#881337 / #9F1239) & Fracture Micro-Interaction
+   ========================================================================== */
+
+.wax-seal-assembly {
+  position: absolute;
+  top: 47%;
+  left: 50%;
+  width: 108px;
+  height: 108px;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-wax), filter 0.35s var(--ease-glide);
+  filter: drop-shadow(0 10px 18px rgba(94, 11, 36, 0.38));
+}
+
+body[data-state="sealed"] .envelope:hover .wax-seal-assembly {
+  transform: translate(-50%, -50%) scale(1.06);
+  filter: drop-shadow(0 14px 24px rgba(94, 11, 36, 0.48));
+}
+
+.wax-seal__half {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.72s var(--ease-glide),
+    opacity 0.72s var(--ease-glide);
+}
+
+.wax-seal__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Fracture & Parting Animation when Seal Breaks */
+body[data-state="opening"] .wax-seal__half--left,
+body[data-state="unsealed"] .wax-seal__half--left {
+  transform: translate3d(-46px, -2px, 0) rotate(-18deg) scale(0.92);
+  opacity: 0.92;
+}
+
+body[data-state="opening"] .wax-seal__half--right,
+body[data-state="unsealed"] .wax-seal__half--right {
+  transform: translate3d(46px, 0px, 0) rotate(19deg) scale(0.92);
+  opacity: 0.92;
+}
+
+/* Wax Crumbs / Fracture Shards */
+.wax-shard {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  background-color: var(--wax-crimson);
+  border-radius: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.65s var(--ease-out-expo),
+    opacity 0.65s var(--ease-out-expo);
+}
+
+body[data-state="opening"] .wax-shard--1 {
+  transform: translate(-24px, -28px) rotate(35deg);
+  opacity: 0;
+}
+body[data-state="opening"] .wax-shard--2 {
+  transform: translate(26px, -20px) rotate(-40deg);
+  opacity: 0;
+}
+body[data-state="opening"] .wax-shard--3 {
+  transform: translate(-18px, 32px) rotate(-25deg);
+  opacity: 0;
+}
+body[data-state="opening"] .wax-shard--4 {
+  transform: translate(22px, 28px) rotate(50deg);
+  opacity: 0;
+}
+
+/* Prompt Pill under the Envelope */
+.seal-prompt {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  transition: opacity 0.4s var(--ease-glide), transform 0.4s var(--ease-glide);
+}
+
+.seal-prompt__button {
+  font-family: var(--font-ui);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--ink-primary);
+  background-color: var(--parchment-light);
+  border: 1px solid #CFC2AE;
+  border-radius: 999px;
+  padding: 0.72rem 1.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(44, 30, 22, 0.07);
+  transition: background-color 0.25s var(--ease-glide),
+    border-color 0.25s var(--ease-glide),
+    transform 0.25s var(--ease-glide);
+}
+
+.seal-prompt__button:hover {
+  background-color: var(--envelope-base);
+  border-color: var(--wax-burgundy);
+  transform: translateY(-1px);
+}
+
+.seal-prompt__pulse {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: var(--wax-burgundy);
+  box-shadow: 0 0 0 3px rgba(136, 19, 55, 0.18);
+}
+
+/* ==========================================================================
+   Full Unfolded Parchment Letter Manuscript (#FAF7F2 -> #F3ECE2)
+   ========================================================================== */
+
+.manuscript {
+  width: 100%;
+  max-width: 780px;
+  scroll-margin-top: 5.5rem;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transform: translateY(36px);
+  pointer-events: none;
+  transition: opacity 0.85s var(--ease-glide),
+    transform 0.85s var(--ease-glide),
+    max-height 1.1s var(--ease-glide);
+}
+
+body[data-state="unsealed"] .manuscript {
+  opacity: 1;
+  max-height: 2600px;
+  overflow: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+  margin-top: 0.5rem;
+}
+
+.manuscript__sheet {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    var(--parchment-light) 0%,
+    var(--parchment-warm) 100%
+  );
+  border: 1px solid #D3C5B0;
+  border-radius: 12px;
+  padding: clamp(1.75rem, 3.8vw, 2.75rem) clamp(2rem, 4.5vw, 3.5rem);
+  box-shadow: var(--shadow-manuscript);
+}
+
+/* Inner Archival Frame Border */
+.manuscript__sheet::before {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(184, 151, 104, 0.35);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.manuscript__topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-bottom: 1.25rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(200, 187, 166, 0.65);
+}
+
+.manuscript__folio-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.manuscript__archive-tag {
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--wax-burgundy);
+}
+
+.manuscript__date {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink-secondary);
+}
+
+.manuscript__dispatch-badge {
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--wax-burgundy);
+  padding: 0.35rem 0;
+}
+
+/* Editorial Letter Header & Salutation */
+.manuscript__header {
+  margin-bottom: 1.75rem;
+}
+
+.manuscript__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--ink-primary);
+  margin-bottom: 1.25rem;
+  text-wrap: balance;
+}
+
+.manuscript__Salutation {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--wax-burgundy);
+}
+
+/* Handwritten Keepsake Callout (Caveat) */
+.manuscript__callout {
+  border-top: 1px solid rgba(200, 187, 166, 0.7);
+  border-bottom: 1px solid rgba(200, 187, 166, 0.7);
+  padding: 1.35rem 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.manuscript__callout-text {
+  font-family: var(--font-script);
+  font-size: clamp(1.42rem, 2.5vw, 1.72rem);
+  line-height: 1.42;
+  color: var(--ink-primary);
+}
+
+/* Letter Literary Body Prose (Cormorant Garamond, 65-72ch measure) */
+.manuscript__body {
+  font-family: var(--font-serif);
+  font-size: clamp(1.14rem, 1.75vw, 1.26rem);
+  line-height: 1.62;
+  color: var(--ink-body);
+  max-width: 68ch;
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+}
+
+.manuscript__body p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 600;
+  float: left;
+  line-height: 0.86;
+  padding-right: 0.55rem;
+  padding-top: 0.15rem;
+  color: var(--wax-burgundy);
+}
+
+/* Letter Footer: Signature + Embossed Wax Stamp */
+.manuscript__footer {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(200, 187, 166, 0.65);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.manuscript__signoff {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: 460px;
+}
+
+.manuscript__complimentary-close {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--ink-secondary);
+}
+
+.manuscript__signature {
+  font-family: var(--font-script);
+  font-size: clamp(2rem, 3.6vw, 2.65rem);
+  font-weight: 700;
+  color: var(--wax-burgundy);
+  line-height: 1.15;
+  margin: 0.15rem 0 0.4rem;
+}
+
+.manuscript__postscript {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.manuscript__wax-imprint {
+  width: 88px;
+  height: 88px;
+  flex-shrink: 0;
+  transform: rotate(-6deg);
+  filter: drop-shadow(0 6px 12px rgba(94, 11, 36, 0.25));
+}
+
+.imprint-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.manuscript__actions {
+  margin-top: 2.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(200, 187, 166, 0.45);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+}
+
+/* ==========================================================================
+   URL Personalization & Correspondence Composer Drawer
+   ========================================================================== */
+
+.composer-panel {
+  width: 100%;
+  max-width: 780px;
+  margin-top: 2rem;
+}
+
+.composer-panel[hidden] {
+  display: none;
+}
+
+.composer-panel__card {
+  background-color: var(--parchment-light);
+  border: 1px solid #C8BBA6;
+  border-radius: 12px;
+  padding: 2rem 2.25rem;
+  box-shadow: var(--shadow-manuscript);
+}
+
+.composer-panel__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem;
+  margin-bottom: 1.35rem;
+}
+
+.composer-panel__title {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  margin-bottom: 0.3rem;
+}
+
+.composer-panel__desc {
+  font-family: var(--font-ui);
+  font-size: 0.86rem;
+  color: var(--ink-secondary);
+  line-height: 1.5;
+}
+
+.composer-panel__desc code {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--wax-burgundy);
+  background-color: var(--wax-soft-tint);
+  padding: 0.12rem 0.4rem;
+  border-radius: 4px;
+}
+
+.composer-panel__close {
+  background: transparent;
+  border: 1px solid #D5C8B4;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-secondary);
+  cursor: pointer;
+  transition: background-color 0.2s var(--ease-glide),
+    color 0.2s var(--ease-glide);
+}
+
+.composer-panel__close:hover {
+  background-color: var(--envelope-base);
+  color: var(--wax-burgundy);
+}
+
+.composer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.composer-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.composer-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.composer-field__label {
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+}
+
+.composer-field__label code {
+  color: var(--wax-burgundy);
+}
+
+.composer-field__input,
+.composer-field__textarea {
+  font-family: var(--font-ui);
+  font-size: 0.9rem;
+  color: var(--ink-primary);
+  background-color: var(--parchment-warm);
+  border: 1px solid #C8BBA6;
+  border-radius: 8px;
+  padding: 0.68rem 0.9rem;
+  transition: border-color 0.2s var(--ease-glide),
+    background-color 0.2s var(--ease-glide);
+}
+
+.composer-field__input::placeholder,
+.composer-field__textarea::placeholder {
+  color: var(--ink-muted);
+}
+
+.composer-field__input:focus,
+.composer-field__textarea:focus {
+  outline: none;
+  border-color: var(--wax-burgundy);
+  background-color: var(--parchment-light);
+}
+
+.composer-preview {
+  border-top: 1px solid #C8BBA6;
+  border-bottom: 1px solid #C8BBA6;
+  padding: 0.9rem 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.composer-preview__label {
+  font-family: var(--font-ui);
+  font-size: 0.76rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-secondary);
+}
+
+.composer-preview__code {
+  font-family: var(--font-ui);
+  font-size: 0.84rem;
+  font-weight: 500;
+  color: var(--wax-burgundy);
+  word-break: break-all;
+}
+
+.composer-form__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  padding-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Floating Mute / Unmute Audio Button
+   ========================================================================== */
+
+.floating-audio-btn {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  z-index: 40;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--ink-primary);
+  background-color: var(--parchment-light);
+  border: 1px solid #C8BBA6;
+  border-radius: 999px;
+  padding: 0.68rem 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.52rem;
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(44, 30, 22, 0.14);
+  transition: background-color 0.22s var(--ease-glide),
+    border-color 0.22s var(--ease-glide),
+    transform 0.22s var(--ease-glide),
+    color 0.22s var(--ease-glide);
+}
+
+.floating-audio-btn:hover {
+  background-color: var(--envelope-base);
+  border-color: var(--wax-burgundy);
+  transform: translateY(-2px);
+}
+
+.floating-audio-btn[aria-pressed="true"] {
+  background-color: var(--wax-burgundy);
+  border-color: var(--wax-deep);
+  color: var(--parchment-light);
+}
+
+.floating-audio-btn__icon-wrap {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.audio-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.floating-audio-btn[aria-pressed="false"] .audio-icon--playing {
+  display: none;
+}
+
+.floating-audio-btn[aria-pressed="true"] .audio-icon--muted {
+  display: none;
+}
+
+/* ==========================================================================
+   Editorial Footer
+   ========================================================================== */
+
+.site-footer {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(200, 187, 166, 0.6);
+  background-color: rgba(243, 236, 226, 0.75);
+  padding: 1.35rem 1.75rem;
+}
+
+.site-footer__inner {
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-family: var(--font-ui);
+  font-size: 0.8rem;
+  color: var(--ink-secondary);
+}
+
+.site-footer__brand strong {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  color: var(--ink-primary);
+}
+
+.site-footer__hint code {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  color: var(--wax-burgundy);
+  background-color: var(--wax-soft-tint);
+  padding: 0.14rem 0.42rem;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints (Tablet & Mobile)
+   ========================================================================== */
+
+@media (max-width: 720px) {
+  .masthead__edition {
+    display: none;
+  }
+
+  .correspondence-stage {
+    padding: 1.75rem 1.15rem 4.75rem;
+  }
+
+  .envelope {
+    height: 290px;
+  }
+
+  .wax-seal-assembly {
+    width: 92px;
+    height: 92px;
+  }
+
+  .envelope__address-plate {
+    min-width: 210px;
+    padding: 0.55rem 1rem;
+  }
+
+  .address-plate__recipient {
+    font-size: 1.08rem;
+  }
+
+  .envelope__postmark {
+    display: none;
+  }
+
+  body[data-state="opening"] .envelope-sanctuary,
+  body[data-state="unsealed"] .envelope-sanctuary {
+    margin-top: 10.5rem;
+  }
+
+  body[data-state="opening"] .envelope__gliding-sheet,
+  body[data-state="unsealed"] .envelope__gliding-sheet {
+    transform: translateY(-74px) scale(1);
+  }
+
+  .composer-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manuscript__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .floating-audio-btn {
+    right: 1rem;
+    bottom: 1rem;
+  }
+}
+
+/* ==========================================================================
+   Reduced Motion Preference
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
